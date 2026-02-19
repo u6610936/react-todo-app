@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:18-alpine'
-      args '-u root'
-    }
-  }
+  agent any
 
   environment {
     IMAGE_NAME = 'finead-todo-app'
@@ -12,26 +7,6 @@ pipeline {
   }
 
   stages {
-    stage('Prepare') {
-      steps {
-        sh 'apk add --no-cache git docker-cli'
-      }
-    }
-
-    stage('Build') {
-      steps {
-        echo 'Installing dependencies...'
-        sh 'npm install'
-      }
-    }
-
-    stage('Test') {
-      steps {
-        echo 'Running unit tests...'
-        sh 'npm test'
-      }
-    }
-
     stage('Containerize') {
       steps {
         echo 'Building Docker image...'
